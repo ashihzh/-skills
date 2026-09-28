@@ -1,7 +1,7 @@
-# skills · 任务技能三件套
+# skills · 技能仓库
 
-> task-planner(想清楚) + task-executor(干到底) + session-handoff-prompt(跨对话交接)，三份 skill 配套使用。
-> 本仓库同时提供两种形态：根目录可直接阅读的 4 份 md，以及 skills 目录下可直接安装的原样文件。两边内容一致，根目录文件是入口，skills 是本体。
+> task-planner(想清楚) + task-executor(干到底) + session-handoff-prompt(跨对话交接)，三份 skill 配套使用；tech-doc-docx(技术文档生成)可独立使用。
+> 本仓库同时提供两种形态：根目录可直接阅读的 5 份 md，以及 skills 目录下可直接安装的原样文件。两边内容一致，根目录文件是入口，skills 是本体。
 
 ## 一页总览
 
@@ -10,11 +10,12 @@
 | [task-planner](task-planner.md) | 把不明确的需求变成可执行的计划，产出 plan.md + brief.md + ledger.md 三件套 | 用户说规划、做个计划、只出计划不执行、出个方案、怎么干、先想清楚、先规划后执行，或复杂任务想先对齐再动手 |
 | [task-executor](task-executor.md) | 照三件套逐工作包执行，靠证据判定和止损稳定交付 | 用户说执行计划、开工、干活、继续、接着干、按计划做、接着上次做，或工作区已存在 plan.md 而用户要求推进 |
 | [session-handoff-prompt](session-handoff-prompt.md) | 把本会话进展整理成给新对话的交接提示词文件 | 用户说总结一下、交接、给新对话、换个对话继续、接着上次做、继续优化 |
+| [tech-doc-docx](tech-doc-docx.md) | 把工程素材变成正式中文技术文档(.docx，三线表，四种文档范式) | 用户说技术文档、技术报告、操作手册、接口文档、模块说明、部署指南、烧录指南、.docx，或要把调试记录/硬件分析/部署步骤转成正式文档 |
 
 ## 阅读顺序
 
 1. 先读本文件(总览 + 目录)。
-2. 按需读三份分册：task-planner.md -> task-executor.md -> session-handoff-prompt.md。
+2. 按需读四份分册：task-planner.md -> task-executor.md -> session-handoff-prompt.md，技术文档需求直接读 tech-doc-docx.md。
 3. 三者的分工与状态载体：
 
 | 项目 | task-planner | task-executor | session-handoff-prompt |
@@ -30,6 +31,7 @@ README.md                      <- 本文件(总入口)
 task-planner.md                <- 分册 1：可直接阅读的完整版(含模板与澄清清单附录)
 task-executor.md               <- 分册 2：可直接阅读的完整版(含台账模板与方法附录)
 session-handoff-prompt.md      <- 分册 3：可直接阅读的完整版(单文件 skill)
+tech-doc-docx.md                 <- 分册 4：可直接阅读的完整版(含 agents 与 references 附录)
 skills/
   task-planner/SKILL.md                  <- 可安装本体
   task-planner/assets/plan-template.md
@@ -39,14 +41,16 @@ skills/
   task-executor/assets/ledger-template.md
   task-executor/references/method-and-selfcheck.md
   session-handoff-prompt/SKILL.md        <- 可安装本体(单文件)
-tech-doc-docx/                   <- 原有目录(未动)
+  tech-doc-docx/SKILL.md                   <- 可安装本体
+  tech-doc-docx/agents/openai.yaml
+  tech-doc-docx/references/                <- 内容风格/跨学科风格/文档范式/格式模板 4 份
 ```
 
 ## 安装用法
 
 - 把 skills 下对应目录复制到你的 skill 目录(如 DSH 的 skills 目录或项目的 .agents/skills)，即装好该 skill。
-- 只想阅读：看根目录 4 份 md 即可，不用下钻。
-- 三份 skill 配套使用：planner 出计划 -> executor 执行并回写 ledger -> 换对话时用 handoff 生成交接提示词。
+- 只想阅读：看根目录 5 份 md 即可，不用下钻。
+- 三份 skill 配套使用：planner 出计划 -> executor 执行并回写 ledger -> 换对话时用 handoff 生成交接提示词；tech-doc-docx 独立使用，把工程素材写成正式中文技术文档。
 
 ## 配套纪律(通用)
 
