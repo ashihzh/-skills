@@ -1,4 +1,4 @@
-> 本文件是 skill(task-executor)的可读完整版：正文 = skills/task-executor/SKILL.md 原样，附录 A/B = assets 与 references 原样。想安装请直接复制 skills/task-executor 目录。
+> 本文件是 skill(task-executor)的可读完整版：正文 = skills/task-executor/SKILL.md 原样，附录收录配套文件原样。想安装请直接复制 skills/task-executor 目录。
 
 ---
 
@@ -90,9 +90,10 @@ description: 任务执行技能：照 task-planner 产出的 plan.md + brief.md 
 - 与 task-planner：规划产出计划、执行消费计划；设计问题回收给规划流程（补规划），不在执行侧拍板。
 - 与 session-handoff-prompt：ledger 已承担任务内跨对话状态；交接提示词只用于换项目/换环境的长距离移交。
 
+
 ---
 
-# 附录 A：assets/ledger-template.md
+# 附录 A:assets\ledger-template.md
 
 # <任务名> · 任务台账（ledger）
 
@@ -148,9 +149,10 @@ description: 任务执行技能：照 task-planner 产出的 plan.md + brief.md 
 |---|---|---|
 |  |  |  |
 
+
 ---
 
-# 附录 B：references/method-and-selfcheck.md
+# 附录 B:references\method-and-selfcheck.md
 
 # 方法论详单 + 通用自检清单
 
@@ -212,3 +214,5 @@ description: 任务执行技能：照 task-planner 产出的 plan.md + brief.md 
 - [ ] 范围外发现进 backlog，没有顺手开修
 - [ ] 人工闸门项等到了用户点头
 - [ ] 回滚点存在且可用（高风险包必查）
+
+
