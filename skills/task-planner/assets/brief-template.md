@@ -1,3 +1,4 @@
+<!-- skill-version: 2.1.0 -->
 # <任务名> · 任务说明书（brief）
 
 > 由 task-planner 生成，task-executor 全程遵守。项目/环境事实只写在这里，不写进任何技能母版。
