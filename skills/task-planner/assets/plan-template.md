@@ -7,6 +7,13 @@
 
 <一段话说清：这是什么项目、本轮目标、为什么做。>
 
+# 本轮清理义务（每轮必写）
+
+- 临时产物默认落 `_attic/<轮>/tmp/`；原始证据落 `_attic/<轮>/evidence/`，轮目录只留 `evidence.md` 索引。
+- 收工前必跑 `bash .plan/_tools/plan-ops.sh check`，零红才可写 done。
+- 若 `.plan>200MB` 或单轮>50MB，写明「提议压缩」（按本技能 `references/compact-rules.md` 的断链四条件，由 task-executor 执行归档/合并 md/改 INDEX），但不自动压缩。
+- `_attic` 永不自动删；归档/清理默认 dry-run，删除 evidence 前先落 `_evidence-manifest.tsv`。
+
 # 运行模式声明
 
 <单任务（默认）或多对话并行。单任务删掉本节以下所有「多对话」小节。>
