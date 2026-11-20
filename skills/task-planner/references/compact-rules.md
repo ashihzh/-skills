@@ -1,3 +1,4 @@
+<!-- skill-version: 2.1.0 -->
 # 断链压缩规则（多轮规划压缩的唯一判定依据）
 
 > 本规则由 task-planner 持有、task-executor 执行时遵守。多轮累积需要压缩历史轮时，四条候选条件全部满足才算候选，任一不满足 → 不压并说明原因。
@@ -17,7 +18,7 @@
 
 1. `plan-ops.sh compact-audit`：只读，输出候选组、每组合并后体积、被删/被留清单。
 2. 用户批准（`INDEX.md` 的 `压缩授权：auto` 时跳过），或按预授权直接执行。
-3. `plan-ops.sh archive --rounds rNN-rMM`：三件套 → `archive/<轮>/`（evidence 删除前先落 `_evidence-manifest.tsv`）。
+3. `plan-ops.sh archive --rounds rNN-rMM`：三件套 → `archive/<轮>/`（evidence 删除前先落 `archive/_evidence-manifest.tsv`）。
 4. 写 `archive/topics/<主题>-rNN-rMM.md`（模板见 `assets/TOPIC.md`）。
 5. 更新 `INDEX.md` 的「已压缩组」表与被压各轮的状态行（状态改 `archived`）。
 6. 收尾 `plan-ops.sh check` 零红。
