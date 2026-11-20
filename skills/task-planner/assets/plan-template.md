@@ -1,3 +1,4 @@
+<!-- skill-version: 2.1.0 -->
 # <任务名> · 执行计划（<编号/日期>）
 
 > 由 task-planner 生成。执行依据 = 本文件 + brief.md + ledger.md。

@@ -1,10 +1,11 @@
+<!-- skill-version: 2.1.0 -->
 # r<N> <轮标题>
 
 | 项 | 值 |
 |---|---|
 | 轮次 | r<N> |
 | 类型 | 单任务 / 多任务 / 团队 |
-| 状态 | draft / **active** / done / superseded / archived |
+| 状态 | draft / active / done / superseded / superseded-by-rNN / archived / awaiting_user / in_progress |
 | 开始 | YYYY-MM-DDTHH:MM+08:00 |
 | 结束 | — |
 | 继承自 | r<M>（本轮接的是哪一轮的结论） |
@@ -35,5 +36,3 @@
 - 原始证据：落 `_attic/<轮>/evidence/`，轮目录只留 `evidence.md` 索引。
 - 临时产物：探针/调试/一次性脚本一律落 `_attic/<轮>/tmp/`，不写轮目录或 `.plan` 根。
 - 收工前必跑 `bash .plan/_tools/plan-ops.sh check`，有红不得写 done。
-- `handoff.md` —— 可选，跨对话交接导出物
-- `evidence/` —— 日志、截图

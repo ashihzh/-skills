@@ -1,3 +1,4 @@
+<!-- skill-version: 2.1.0 -->
 # <任务名> · 任务台账（ledger）
 
 > task-executor 每完成一步**立即**回写本文件。跨对话续作的唯一依据；没证据不写 done。

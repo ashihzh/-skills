@@ -1,3 +1,4 @@
+<!-- skill-version: 2.1.0 -->
 # r<N> 团队映射（Agent Teams）
 
 > 本文件是**计划侧**的团队定义。运行期状态在 `.agent-teams/`（不入库，不要读）。
