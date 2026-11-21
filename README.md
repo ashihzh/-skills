@@ -9,6 +9,7 @@
 |---|---|---|
 | v2.0.0 | 2026-11-21 | 多轮压缩内建两张主技能、撤销独立 task-compactor、移除过时根目录单文件版、重写本说明 |
 | v2.1.0 | 2026-11-21 | 修复 6 项质量缺陷（1 P0 + 2 P1 + 3 P2）、plan-ops.sh 随技能包分发、13 md 版本注释 |
+| v2.2.0 | 2026-11-21 | 六项机制层能力升级：单一状态机 / doctor 开工契约校验 / 意图层守护 / 反假阳性验收 / 反模式库 / 版本语义与能力清单 |
 
 版本号见两张主技能 frontmatter 的 `version` 字段；完整变更见 [CHANGELOG.md](CHANGELOG.md)。
 
@@ -16,8 +17,8 @@
 
 | skill | 一句话 | 什么时候用 | 版本 |
 |---|---|---|---|
-| [task-planner](skills/task-planner/SKILL.md) | 把不明确的需求变成决策完整的计划，产出 plan.md + brief.md + ledger.md 三件套；多轮压缩规则由它持有 | 用户说规划、做个计划、只出计划不执行、出个方案、怎么干、先想清楚、先规划后执行，或面对复杂任务想先对齐再动手 | v2.1.0 |
-| [task-executor](skills/task-executor/SKILL.md) | 照三件套逐工作包执行，靠证据判定和止损稳定交付；用户要求或体积超阈值时自行执行多轮压缩 | 用户说执行、执行一下、开工、干活、继续、接着干、按计划做、按执行技能干活；或工作区有 .plan/ 而用户要求推进 | v2.1.0 |
+| [task-planner](skills/task-planner/SKILL.md) | 把不明确的需求变成决策完整的计划，产出 plan.md + brief.md + ledger.md 三件套；多轮压缩规则由它持有 | 用户说规划、做个计划、只出计划不执行、出个方案、怎么干、先想清楚、先规划后执行，或面对复杂任务想先对齐再动手 | v2.2.0 |
+| [task-executor](skills/task-executor/SKILL.md) | 照三件套逐工作包执行，靠证据判定和止损稳定交付；用户要求或体积超阈值时自行执行多轮压缩 | 用户说执行、执行一下、开工、干活、继续、接着干、按计划做、按执行技能干活；或工作区有 .plan/ 而用户要求推进 | v2.2.0 |
 | [session-handoff-prompt](skills/session-handoff-prompt/SKILL.md) | 把本会话进展整理成给新对话的交接提示词文件 | 用户说总结一下、交接、给新对话、换个对话继续、接着上次做、继续优化 | — |
 | [tech-doc-docx](skills/tech-doc-docx/SKILL.md) | 把工程素材变成正式中文技术文档（.docx，三线表，四种文档范式） | 用户说技术文档、技术报告、操作手册、接口文档、模块说明、部署指南、.docx | — |
 
@@ -37,7 +38,7 @@ README.md                              <- 本文件（总入口 + 版本）
 CHANGELOG.md                           <- 变更记录
 skills/
   task-planner/                        <- 可安装本体（规划侧）
-    SKILL.md                           <- v2.1.0（含 version 字段）
+    SKILL.md                           <- v2.2.0（含 version 字段 + 能力清单节）
     assets/
       ROUND.md                         <- 轮次总览模板
       TASK.md                          <- 多任务卡模板
@@ -50,7 +51,7 @@ skills/
       compact-rules.md                 <- 断链压缩四条件（v2.0.0 新增，唯一判定依据）
       plan-layout.md                   <- .plan 目标目录契约
   task-executor/                       <- 可安装本体（执行侧）
-    SKILL.md                           <- v2.1.0（含 version 字段，内建多轮压缩）
+    SKILL.md                           <- v2.2.0（含 version 字段 + 能力清单节，内建多轮压缩）
     assets/ledger-template.md          <- 台账模板
     references/method-and-selfcheck.md <- 执行方法论与自检
   session-handoff-prompt/SKILL.md      <- 可安装本体（单文件）

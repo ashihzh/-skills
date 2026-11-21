@@ -1,9 +1,9 @@
 ---
 name: task-planner
 description: 任务规划技能：把需求变成决策完整的可执行计划，产出三件套 plan.md/brief.md/ledger.md 并维护 .plan/INDEX.md 入口。触发：规划、做个计划、只出计划不执行、出个方案、怎么干/怎么重做、新任务、排工作包、先想清楚、先规划后执行、多对话、并行、同时开几个。复杂任务先澄清；规划阶段只读零副作用；多轮压缩规则内建。
-version: 2.1.0
+version: 2.2.0
 ---
-<!-- skill-version: 2.1.0 -->
+<!-- skill-version: 2.2.0 -->
 
 # 任务规划（task-planner）
 
@@ -28,6 +28,8 @@ version: 2.1.0
 9. **临时产物默认落 `_attic/<轮>/tmp/`**。规划阶段虽零副作用，但计划里必须为执行阶段写明垃圾去处：探针/调试/一次性产物直接写 `_attic/<轮>/tmp/`，不写轮目录或 `.plan` 根。
 10. **证据两段式**。原始证据落 `_attic/<轮>/evidence/`，轮目录内只维护一份几 KB 的 `evidence.md`（一行一条：结论/路径/命令或哈希/时间）；禁止把大证据堆在轮目录。
 11. **规划要预留压缩义务**。压缩是本套技能的内建能力，不靠任何外部技能：规划侧负责声明 `INDEX.md` 的「压缩授权」开关并把断链压缩规则写进计划，执行侧（task-executor）按同一套规则真正执行。规划时若发现 `.plan>200MB` 或单轮>50MB，把「提议压缩」写进计划，但不擅自压缩（执行者只提议、不自动压）。断链压缩四条件与执行顺序见 `references/compact-rules.md`，合并 md 模板见 `assets/TOPIC.md`。
+12. **状态词用唯一权威 `references/state-machine.md`**。轮次/任务状态全集（含合法与非法迁移、每态进出条件）只在该文件定义；`assets/ROUND.md` / `assets/TASK.md` / `references/plan-layout.md` / `task-executor/assets/ledger-template.md` 只引用、不重复列全表。新状态先改该文件，再决定哪些层级暴露子集。
+13. **反模式库 `references/anti-patterns.md`**。反复踩的坑抽象成通用反模式（现象/根因/规避/检测信号），澄清与风险登记时参考它预判坑点；本文件永不含具体轮号/slug/commit/token（母版零任务内容）。
 
 ## 运行模式（单任务默认，多对话可选）
 
@@ -47,7 +49,8 @@ version: 2.1.0
 
 - 按 `references/clarify-checklist.md` 提问；一轮不超过 5 个问题，问完消化再问下一轮。
 - 含糊答案（「都行」「1 或 3」）必须追问；用户的自由补充往往才是真需求，逐条吸收进决策表。
-- 拍板结果整理成「已拍板决策表」，这是计划的需求说明书。
+- 拍板结果整理成「已拍板决策表」，这是计划的需求说明书；每条决策标注「来源」（用户拍板/代拍板/文档推定）。
+- **意图层**：把用户明确说过的关键原话（含消息引用/时间）原样记入 brief.md 的「用户原话决策」区，标注其为最高优先级。书面结论与该区原话冲突时以原话为准。
 
 ### 第 3 步：写 plan.md
 
@@ -97,6 +100,20 @@ version: 2.1.0
   仅当本轮是团队轮时，补一句「用 TEAM.md 建 agent-teams 等我批准」。
 - 不在对话里复述计划全文；计划以文件为准。
 
+## 能力清单（v2.2.0）
+
+> 本节列本技能的**能力**（不是格式），每条指向实现文件与验证方式。这是「能力升级而非格式补丁」的可核对清单。
+
+| 能力 | 实现文件 | 验证方式 |
+|---|---|---|
+| 决策完整编排（执行模型零设计决策） | `SKILL.md` 铁律 3 + `assets/plan-template.md` | 逐包决策完整自检 |
+| 意图层守护（原话决策最高优先级） | `assets/brief-template.md`「用户原话决策」区 + `SKILL.md` 第 2 步 | brief 原话区 + 来源列存在 |
+| 单一状态机定义（唯一权威） | `references/state-machine.md` + 5 模板引用 | 模板无重复全表、引用 count≥1 |
+| 断链压缩规则（四条件+合并 md） | `references/compact-rules.md` + `assets/TOPIC.md` | `plan-ops.sh compact-audit` 报告 |
+| 反模式库（经验抽象回流） | `references/anti-patterns.md` | 条目≥6、零任务内容断言 |
+| 反假阳性验收（精确断言+负向测试） | 传给 `task-executor` 的 `references/method-and-selfcheck.md` | 精确断言 + 负向测试 |
+| 开工契约校验声明（doctor） | `.plan/_tools/plan-ops.sh doctor`（随附副本 `assets/plan-ops.sh`） | `plan-ops.sh doctor` 实跑 |
+
 ## 计划质量标准
 
 好计划的判据是「换一个没见过本对话的执行模型，也能不出错地干完」：
@@ -132,3 +149,4 @@ version: 2.1.0
 8. 技能母版文件里没有出现本任务的具体内容。
 9. `INDEX.md` 顶部有「压缩授权」行；轮目录无临时产物/原始 evidence（已归 `_attic/<轮>/`）；压缩义务已写进计划。
 10. 多轮压缩规则就位：`references/compact-rules.md`（四条件+执行顺序+必写项）与 `assets/TOPIC.md`（合并 md 模板）在本技能目录内，不引用任何外部技能。
+11. 状态词只在 `references/state-machine.md` 定义，模板/文档/INDEX 均无重复全量词表（层级子集已标注「本层级子集，全集见 state-machine.md」）。
