@@ -1,11 +1,11 @@
-<!-- skill-version: 2.1.0 -->
+<!-- skill-version: 2.2.0 -->
 # r<N> <轮标题>
 
 | 项 | 值 |
 |---|---|
 | 轮次 | r<N> |
 | 类型 | 单任务 / 多任务 / 团队 |
-| 状态 | draft / active / done / superseded / superseded-by-rNN / archived / awaiting_user / in_progress |
+| 状态 | 状态词见 `references/state-machine.md`（用**轮级全集**，不在此重复列举） |
 | 开始 | YYYY-MM-DDTHH:MM+08:00 |
 | 结束 | — |
 | 继承自 | r<M>（本轮接的是哪一轮的结论） |

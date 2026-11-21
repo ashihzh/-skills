@@ -1,8 +1,8 @@
-<!-- skill-version: 2.1.0 -->
+<!-- skill-version: 2.2.0 -->
 # <任务名> · 任务台账（ledger）
 
 > task-executor 每完成一步**立即**回写本文件。跨对话续作的唯一依据；没证据不写 done。
-> 状态词：pending / in_progress / done / blocked
+> 状态词：**本层级子集** `pending / in_progress / done / blocked`（工作包级）；全集见 task-planner 的 `references/state-machine.md`。
 
 ## 开工基线（开工时填，之后不改）
 

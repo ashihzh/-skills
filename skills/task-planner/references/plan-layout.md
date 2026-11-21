@@ -1,4 +1,4 @@
-<!-- skill-version: 2.1.0 -->
+<!-- skill-version: 2.2.0 -->
 # `.plan/` 布局契约（规划与执行的绑定点）
 
 > 规划技能**写**这个布局；执行技能**读**这个布局。两边的唯一契约就是 `.plan/INDEX.md`。
@@ -60,8 +60,7 @@
 3. 一行 **`体积水位：<时间> 实测 <大小>`**：供执行技能判断是否需要提议压缩。
 4. 一张**两级轮次表**：近 5 轮（完整列）+ 历史（轮 / 目录 / 状态 / 一句话）。
 5. 一张**已压缩组表**（本轮为空，留给 compact 填）。
-6. 状态用固定词：`draft` `active` `done` `superseded` `superseded-by-rNN` `archived` `awaiting_user` `in_progress`。
-   **同一时刻最多一个 `active`**；新轮转 active 时，上一轮必须显式改成 `done` 或 `superseded`。
+6. 状态词以 `references/state-machine.md` 为**唯一权威**（轮级全集 10 词，不在此重复列举）；本处只保留约束：**同一时刻最多一个 `active`**；新轮转 active 时，上一轮必须显式改成 `done` 或 `superseded`。
 
 ## 压缩授权与保护窗（规划期就要写清）
 

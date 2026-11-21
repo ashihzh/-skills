@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # plan-ops.sh —— .plan 目录唯一合法的清理/归档/审计/校验工具
 # 默认 dry-run：只有显式传 --apply 才真正动文件。
-# 五个子命令：scan / attic / archive / compact-audit / check
+# 六个子命令：scan / attic / archive / compact-audit / check / doctor
 # 约束：_attic 永不自动删；archive 前先落 _evidence-manifest.tsv；保护最近 5 轮。
 set -u
 
@@ -64,6 +64,7 @@ usage() {
   archive --rounds r26-r56      终态轮三件套 → archive/<轮>/；先落 evidence manifest
   compact-audit                 断链压缩四条件算候选组，输出报告（只读）
   check                         违规检查，有红退出码 1（只读）
+  doctor                        开工契约校验：生效轮/白名单文件/INDEX 三行/状态漂移/裸证据（只读，只告警不修）
 默认 dry-run；要真动文件必须显式 --apply。
 EOF
 }
@@ -113,6 +114,64 @@ check_violations() {
 }
 
 cmd_check() { check_violations; }
+
+# ---------- doctor（开工契约校验，只读、零副作用、只告警不修）----------
+cmd_doctor() {
+  local warn=0 line round="" b d f
+  echo "=== doctor 开工契约校验（只读，只告警不修）==="
+
+  # 1) INDEX.md「当前生效轮」行是否存在且指向存在的轮目录
+  line=$(grep '当前生效轮' "$PLAN_DIR/INDEX.md" 2>/dev/null | head -1)
+  if [ -z "$line" ]; then
+    echo "  [WARN] INDEX.md 缺「当前生效轮」行"; warn=$((warn+1))
+  else
+    round=$(echo "$line" | sed -n 's/.*`\{0,1\}\(\.plan\/\)*[A-Za-z0-9_-]*r[0-9][0-9]*[A-Za-z0-9_-]*.*/\1/p' 2>/dev/null)
+    # 简化：从该行抓 rNN-xxx 形态的轮目录名
+    round=$(echo "$line" | grep -oE 'r[0-9][0-9]*-[A-Za-z0-9_-]+' | head -1)
+    if [ -z "$round" ]; then
+      echo "  [WARN] 「当前生效轮」行未解析出轮目录名: $line"; warn=$((warn+1))
+    elif [ ! -d "$PLAN_DIR/$round" ]; then
+      echo "  [WARN] 生效轮目录不存在: $round"; warn=$((warn+1))
+    else
+      echo "  [OK] 当前生效轮: $round（目录存在）"
+    fi
+  fi
+
+  # 2) 生效轮目录白名单文件检查（ROUND/plan/brief/ledger/evidence + 可选 skills/tasks/TEAM）
+  if [ -n "$round" ] && [ -d "$PLAN_DIR/$round" ]; then
+    for f in $(find "$PLAN_DIR/$round" -maxdepth 1 -type f 2>/dev/null); do
+      b=$(basename "$f")
+      case "$b" in
+        ROUND.md|plan.md|brief.md|ledger.md|evidence.md) ;;
+        *) echo "  [WARN] 生效轮目录出现白名单外文件: $round/$b"; warn=$((warn+1));;
+      esac
+    done
+  fi
+
+  # 3) INDEX 三行头部（生效轮 / 压缩授权 / 体积水位）
+  for key in '当前生效轮' '压缩授权' '体积水位'; do
+    if ! grep -q "$key" "$PLAN_DIR/INDEX.md" 2>/dev/null; then
+      echo "  [WARN] INDEX.md 缺头部行: $key"; warn=$((warn+1))
+    fi
+  done
+
+  # 4) ROUND 状态与 INDEX 是否一致（生效轮状态不应为 done/superseded/archived）
+  if [ -n "$round" ] && [ -f "$PLAN_DIR/$round/ROUND.md" ]; then
+    st=$(grep -i '状态' "$PLAN_DIR/$round/ROUND.md" | head -1)
+    case "$st" in
+      *done*|*superseded*|*archived*) echo "  [WARN] 生效轮状态疑似终态（漂移）: $round → $st"; warn=$((warn+1));;
+      *) echo "  [OK] 生效轮状态非终态";;
+    esac
+  fi
+
+  # 5) 生效轮裸 evidence/ 或临时脚本（复用 check 判定，不修）
+  if [ -n "$round" ] && [ -d "$PLAN_DIR/$round/evidence" ]; then
+    echo "  [WARN] 生效轮出现裸 evidence/ 目录（应按两段式归档）"; warn=$((warn+1))
+  fi
+
+  echo "  [doctor] 告警数=$warn"
+  [ "$warn" -eq 0 ] && return 0 || return 0  # 只读契约：告警写给用户，不用退出码阻断
+}
 
 # ---------- attic ----------
 cmd_attic() {
@@ -200,5 +259,6 @@ case "${1:-}" in
   attic) shift; cmd_attic "$@";;
   archive) shift; cmd_archive "$@";;
   compact-audit) cmd_compact_audit;;
+  doctor) cmd_doctor;;
   *) usage; exit 2;;
 esac
